@@ -6,15 +6,8 @@ import (
 
 func Inicialziar() {
 	// Cria um roteador Gin
-	r := gin.Default()
-
-	// Define uma rota GET
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+	router := gin.Default()
 
 	// Inicia o servidor na porta 8080
-	r.Run() // Equivalente a r.Run(":8080")
+	router.Run(":8080") // Equivalente a r.Run(":8080")
 }
