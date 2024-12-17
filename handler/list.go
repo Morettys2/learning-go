@@ -3,9 +3,17 @@ package handler
 import (
 	"net/http"
 
+	"github.com/Morettys2/learning-go/schemas"
 	"github.com/gin-gonic/gin"
 )
 
-func List(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, gin.H{"message": "List Ok"})
+func ListOpeningsHandler(ctx *gin.Context) {
+	openings := []schemas.Opening{}
+
+	if err := db.Find(&openings).Error; err != nil {
+		sendError(ctx, http.StatusInternalServerError, "error listing openings")
+		return
+	}
+
+	sendSuccess(ctx, "list-openings", openings)
 }

@@ -1,17 +1,23 @@
 package main
 
 import (
+	"github.com/Morettys2/learning-go/config"
 	"github.com/Morettys2/learning-go/router" // Caminho correto do pacote router
-	"github.com/gin-gonic/gin"
+)
+
+var (
+	logger *config.Logger
 )
 
 func main() {
-	// Inicializa o roteador
-	r := gin.Default()
+	logger = config.GetLogger("main")
+	// Initialize Configs
+	err := config.Init()
+	if err != nil {
+		logger.Errorf("config initialization error: %v", err)
+		return
+	}
 
-	// Configura as rotas
-	router.InicializarRotas(r)
-
-	// Executa o servidor na porta 8080
-	r.Run(":8080") // Certifique-se de usar :8080
+	// Initialize Router
+	router.Initialize()
 }

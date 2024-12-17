@@ -1,13 +1,24 @@
 package router
 
 import (
+	"os"
+
 	"github.com/gin-gonic/gin"
 )
 
-func Inicialziar() {
-	// Cria um roteador Gin
+func Initialize() {
+	// Initialize Router
 	router := gin.Default()
 
-	// Inicia o servidor na porta 8080
-	router.Run(":8080") // Equivalente a r.Run(":8080")
+	// Initialize Routes
+	initializeRoutes(router)
+
+	// Get the port from the environment
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	// Run the server
+	router.Run("0.0.0.0:" + port)
 }

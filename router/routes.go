@@ -3,22 +3,25 @@ package router
 import (
 	"github.com/Morettys2/learning-go/handler"
 	"github.com/gin-gonic/gin"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	"github.com/swaggo/swag/example/basic/docs"
 )
 
-// InicializarRotas define as rotas da API
-func InicializarRotas(router *gin.Engine) {
-	// Cria um grupo de rotas v1
-	v1 := router.Group("/api/v1")
+func initializeRoutes(router *gin.Engine) {
+	// Initialize Handler
+	handler.InitializeHandler()
+	basePath := "/api/v1"
+	docs.SwaggerInfo.BasePath = basePath
+	v1 := router.Group(basePath)
 	{
-		// Define a rota GET dentro do grupo
-		v1.GET("/opening", handler.Show)
-		// Define a rota POST
-		v1.POST("/opening", handler.Create)
-		// Define a rota DELETE
-		v1.DELETE("/opening", handler.Delete)
-		// Define a rota PUT
-		v1.PUT("/opening", handler.Update)
-		// Define a rota GET
-		v1.GET("/opening", handler.List)
+		v1.GET("/opening", handler.ShowOpeningHandler)
+		v1.POST("/opening", handler.CreateOpeningHandler)
+		v1.DELETE("/opening", handler.DeleteOpeningHandler)
+		v1.PUT("/opening", handler.UpdateOpeningHandler)
+		v1.GET("/openings", handler.ListOpeningsHandler)
+
 	}
+	// Initialize Swagger
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 }
