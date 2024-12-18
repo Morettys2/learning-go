@@ -1,6 +1,7 @@
 package router
 
 import (
+	docs "github.com/Morettys2/learning-go/docs"
 	"github.com/Morettys2/learning-go/handler"
 	"github.com/gin-gonic/gin"
 	swaggerfiles "github.com/swaggo/files"
